@@ -1,6 +1,6 @@
 /**
  * 工作流管理页面组件
- * 负责工作流的展示、筛选、详情查看和部署等功能
+ * 负责工作流的展示、筛选、详情查看等功能
  */
 function workflowPage() {
   return {
@@ -22,25 +22,6 @@ function workflowPage() {
     showDetail: false,
     tab: 'preview',
     tagInput: '',
-    deploying: false,
-    deploymentSelection: {},
-
-    // 用户候选列表，按频道和角色分组
-    userCandidates: {}, // { '客服-客服人员': [user1, user2] }
-    // 用户搜索关键词，按频道和角色分组
-    searchQuery: {},    // { '客服-客服人员': 'abc' }
-
-    /**
-     * 获取指定频道和角色的用户列表
-     * @param {string} channelName - 频道名称
-     * @param {string} roleName - 角色名称
-     */
-    async fetchUsersForRole(channelName, roleName) {
-      const key = `${channelName}-${roleName}`;
-      const keyword = this.searchQuery[key] || '';
-      const list = await window.fetchUserList({ keyword }, 1, 10);
-      this.userCandidates[key] = list;
-    },
 
     /**
      * 初始化页面
@@ -109,13 +90,14 @@ function workflowPage() {
      */
     handleWorkflowClick(wf) {
       this.showDetail = false;
-      this.deploying = false;
       this.tab = 'preview';
-      this.deploymentSelection = {};
 
       setTimeout(() => {
         this.selectedWorkflow = { ...wf };
-        this.showDetail = true;
+        // 等待抽屉 DOM 挂载后再打开，保证 x-transition 动画生效
+        this.$nextTick(() => {
+          this.showDetail = true;
+        });
       }, 0); // 让 Alpine 先清空，再注入，强制触发绑定
     },
 
@@ -128,7 +110,6 @@ function workflowPage() {
       if (cardClicked) return;
       this.showDetail = false;
       this.selectedWorkflow = null;
-      this.deploying = false;
     },
 
     /**
@@ -168,15 +149,6 @@ function workflowPage() {
     update() {
       console.log('📝 更新工作流（占位）:', this.selectedWorkflow);
       // TODO: 未来可发送 PATCH 请求更新内容
-    },
-
-    /**
-     * 执行工作流部署
-     */
-    executeDeployment() {
-      console.log('部署选择：', this.deploymentSelection);
-      alert(`工作流 "${this.selectedWorkflow.name}" 已部署（模拟）！`);
-      this.deploying = false;
     },
 
     /**

@@ -28,9 +28,8 @@ window.fetchUserList = async function(filters = {}, page = 1, perPage = 20) {
     const status = Math.random() > 0.1 ? 'active' : 'in_active'; // 供状态筛选和切换使用
     const create_at = Date.now() - Math.floor(Math.random() * 100 * 86400 * 1000); // 最近100天内
 
-    const avatar = window.generateAvatarBase64(username);
-
-    return { id, username, nickname, email, roles, status, create_at, avatar };
+    // avatar 字段缺失时，页面会使用纯色块占位
+    return { id, username, nickname, email, roles, status, create_at };
   });
 
   return dummyData.filter(user => {

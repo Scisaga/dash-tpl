@@ -63,7 +63,8 @@ window.fetchTemplateList = async function(filters = {}, page = 1, perPage = 10) 
       description: descriptions[i % descriptions.length],
       tags: tagsList[i % tagsList.length],
       updated_time: now - Math.floor(Math.random() * 1e8),
-      thumbnail: generateWorkflowStyleBase64(),
+      // thumbnail 字段缺失时，页面会使用纯色块占位
+      thumbnail: '',
       models: [models[Math.floor(Math.random() * models.length)]],
       apps: [apps[Math.floor(Math.random() * apps.length)]],
       starred: Math.random() > 0.7,

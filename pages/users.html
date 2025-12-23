@@ -42,8 +42,15 @@
       <div class="grid grid-cols-12 gap-4 px-4 py-3 text-sm border-b items-center hover:bg-gray-50">
         <!-- 用户头像 -->
         <div class="col-span-1">
-          <div class="w-10 h-10 rounded-full overflow-hidden border">
-            <img :src="user.avatar" class="object-cover w-full h-full" />
+          <div class="w-10 h-10 rounded-full overflow-hidden border bg-gray-100">
+            <template x-if="user.avatar">
+              <img :src="user.avatar" class="object-cover w-full h-full" />
+            </template>
+            <template x-if="!user.avatar">
+              <div class="w-full h-full flex items-center justify-center text-white font-semibold"
+                   :style="`background: ${window.placeholderColor(user.username)}`"
+                   x-text="window.placeholderText(user.username)"></div>
+            </template>
           </div>
         </div>
 

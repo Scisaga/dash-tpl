@@ -1,4 +1,1 @@
-@tailwind base;
-@tailwind components;
-@import "preline/variants.css";
-@tailwind utilities;
+@import "tailwindcss";

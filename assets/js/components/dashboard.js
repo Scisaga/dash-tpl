@@ -7,13 +7,14 @@
 function dashboard() {
   return {
     timeFull: '',      // 完整时间显示
-    runningCount: 3,   // 运行中的任务数
-    quota: {
-      token: 3200,     // Token 配额
-      gas: 1840,       // Gas 配额
-    },
     currentHash: '',   // 当前路由 hash
-
+    menuItems: [
+      { label: '模板列表', icon: 'hub', route: '#templates' },
+      { label: '工作流列表', icon: 'flowchart', route: '#workflow' },
+      { label: '用户列表', icon: 'group', route: '#users' },
+      { label: '示例页面', icon: 'lightbulb', route: '#content-page' },
+    ],
+    userName: '访客', // 用户名，默认值为“访客”
     /**
      * 更新时间显示
      * 使用中文格式显示当前时间

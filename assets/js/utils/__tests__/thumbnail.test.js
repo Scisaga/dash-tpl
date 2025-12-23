@@ -1,31 +1,20 @@
-const generateWorkflowStyleBase64 = require('../thumbnail');
+const { placeholderColor, placeholderText } = require('../thumbnail');
 
-describe('generateWorkflowStyleBase64', () => {
-  beforeEach(() => {
-    const ctx = {
-      fillRect: jest.fn(),
-      beginPath: jest.fn(),
-      moveTo: jest.fn(),
-      lineTo: jest.fn(),
-      stroke: jest.fn(),
-      arc: jest.fn(),
-      rect: jest.fn(),
-      fill: jest.fn()
-    };
-    const canvas = {
-      width: 0,
-      height: 0,
-      getContext: jest.fn(() => ctx),
-      toDataURL: jest.fn(() => 'data:image/png;base64,MOCK_DATA')
-    };
-    global.document = { createElement: jest.fn(() => canvas) };
-    // store for assertion
-    this.canvas = canvas;
+describe('placeholderColor', () => {
+  test('returns a stable hsl color for the same seed', () => {
+    const a = placeholderColor('user1');
+    const b = placeholderColor('user1');
+    expect(a).toBe(b);
+    expect(a).toMatch(/^linear-gradient\(\d{1,3}deg, hsl\(\d{1,3}, 78%, 56%\), hsl\(\d{1,3}, 78%, 44%\)\)$/);
+  });
+});
+
+describe('placeholderText', () => {
+  test('returns first character uppercased', () => {
+    expect(placeholderText('user1')).toBe('U');
   });
 
-  test('returns base64 image string', () => {
-    const result = generateWorkflowStyleBase64();
-    expect(result).toMatch(/^data:image\/png;base64,.+/);
-    expect(result.length).toBeGreaterThan('data:image/png;base64,'.length);
+  test('returns ? for empty seed', () => {
+    expect(placeholderText('')).toBe('?');
   });
 });

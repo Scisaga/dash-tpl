@@ -10,29 +10,6 @@
   7. 无限滚动加载
 -->
 <div x-data="templatesPage()" x-init="$nextTick(() => $data.init())" class="p-4">
-  <!-- 轮播区域：展示三个主要功能特点 -->
-  <div class="mb-6">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <div class="relative">
-        <img src="assets/img/1.jpg" class="w-full h-60 rounded-lg shadow-md object-cover" />
-        <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-base px-3 py-1 rounded">
-          支持多行业通用的自动化流程
-        </div>
-      </div>
-      <div class="relative">
-        <img src="assets/img/2.jpg" class="w-full h-60 rounded-lg shadow-md object-cover" />
-        <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-base px-3 py-1 rounded">
-          一键复制模板，加速业务构建
-        </div>
-      </div>
-      <div class="relative">
-        <img src="assets/img/3.jpg" class="w-full h-60 rounded-lg shadow-md object-cover" />
-        <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-base px-3 py-1 rounded">
-          覆盖从智能推荐到质检分析
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- 筛选区域：包含搜索框、标签筛选和排序方式 -->
   <div class="flex flex-wrap justify-between items-center gap-4 p-4 bg-white rounded shadow border">
@@ -72,7 +49,14 @@
     <template x-for="tpl in templates" :key="tpl.id">
       <div class="rounded shadow bg-white overflow-hidden transform transition duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer" data-wf-card @click="handleTemplateClick(tpl)">
         <!-- 模板缩略图 -->
-        <img :src="tpl.thumbnail" class="w-full h-40 object-cover" />
+        <template x-if="tpl.thumbnail">
+          <img :src="tpl.thumbnail" class="w-full h-40 object-cover" />
+        </template>
+        <template x-if="!tpl.thumbnail">
+          <div class="w-full h-40 flex items-center justify-center text-white font-semibold"
+               :style="`background: ${window.placeholderColor(tpl.id || tpl.name)}`">
+          </div>
+        </template>
         <div class="px-3 pt-3 pb-1 flex flex-col gap-2">
           <!-- 模板名称 -->
           <div class="text-base font-semibold text-gray-900 leading-snug" x-text="tpl.name"></div>
@@ -143,7 +127,14 @@
     <!-- 详情内容：包含模板图片、描述、标签等信息 -->
     <div class="p-6 text-sm overflow-y-auto h-full">
       <!-- 模板大图 -->
-      <img :src="selectedTemplate?.thumbnail" class="w-full aspect-video rounded border object-cover" />
+      <template x-if="selectedTemplate?.thumbnail">
+        <img :src="selectedTemplate.thumbnail" class="w-full aspect-video rounded border object-cover" />
+      </template>
+      <template x-if="!selectedTemplate?.thumbnail">
+        <div class="w-full aspect-video rounded border flex items-center justify-center text-white font-semibold"
+             :style="`background: ${window.placeholderColor(selectedTemplate?.id || selectedTemplate?.name)}`">
+        </div>
+      </template>
 
       <!-- 模板描述 -->
       <div class="text-gray-600 mt-2" x-text="selectedTemplate?.description"></div>

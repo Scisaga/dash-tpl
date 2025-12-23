@@ -70,7 +70,7 @@ function usersPage() {
      * @param {Object} user - 用户对象
      */
     toggleUserStatus(user) {
-      user.status = user.status === 'active' ? 'disabled' : 'active';
+      user.status = user.status === 'active' ? 'in_active' : 'active';
     }
   };
 }

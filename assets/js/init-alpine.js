@@ -8,5 +8,5 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('workflowPage', workflowPage);  // 工作流管理页面
   Alpine.data('usersPage', usersPage);        // 用户管理页面
   Alpine.data('templatesPage', templatesPage);// 模板管理页面
-  Alpine.data('deploymentsPage', deploymentsPage); // 部署管理页面
+  Alpine.data('contentPage', contentPage);   // 示例页面：K线图等
 });

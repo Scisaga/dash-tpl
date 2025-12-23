@@ -128,7 +128,8 @@ window.fetchWorkflowList = async function(filters = {}, page = 1, perPage = 10) 
       apps: [apps[i % apps.length]],
       instances: Math.floor(Math.random() * 50),
       executions: Math.floor(Math.random() * 200),
-      thumbnail: generateWorkflowStyleBase64(),
+      // thumbnail 字段缺失时，页面会使用纯色块占位
+      thumbnail: '',
       status: Math.random() < 0.1 ? 'paused' : 'active',
       starred: Math.random() > 0.7,
       channelTemplates: wf.channelTemplates
