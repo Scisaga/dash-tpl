@@ -8,7 +8,7 @@
   5. 页面路由
 -->
 <!DOCTYPE html>
-<html lang="zh" x-data="dashboard" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="zh" x-data="dashboard" data-router="history" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8" />
@@ -66,18 +66,20 @@
             </div>
             <!-- 菜单列表 -->
             <ul class="space-y-1 px-2 mt-2 text-sm">
-                <template x-for="item in menuItems" :key="item.route">
-                    <li @click="window.location.hash = item.route" class="cursor-pointer transition-colors duration-100 " :class="[
-                      currentHash === item.route
-                        ? 'bg-teal-100 text-teal-700 border-teal-500'
-                        : 'hover:bg-stone-50 hover:text-stone-700 text-stone-700 border-transparent',
-                      open ? 'p-2 flex items-center gap-3 justify-start rounded-md'
-                           : 'p-2 flex items-center justify-center rounded-md'
-                    ]">
-                        <span class="material-symbols-outlined text-2xl" :class="currentHash === item.route ? 'font-bold' : ''" x-text="item.icon"></span>
-                        <span class="transition-all duration-300 truncate" :style="open ? 'opacity:1; max-width:180px;' : 'opacity:0; max-width:0px;'">
-                            <span x-text="item.label"></span>
-                        </span>
+                <template x-for="item in menuItems" :key="item.view">
+                    <li>
+                        <a :href="hrefFor(item.view)" @click.prevent="navigate(item.view)" class="cursor-pointer transition-colors duration-100 " :class="[
+                          currentView === item.view
+                            ? 'bg-teal-100 text-teal-700 border-teal-500'
+                            : 'hover:bg-stone-50 hover:text-stone-700 text-stone-700 border-transparent',
+                          open ? 'p-2 flex items-center gap-3 justify-start rounded-md'
+                               : 'p-2 flex items-center justify-center rounded-md'
+                        ]">
+                            <span class="material-symbols-outlined text-2xl" :class="currentView === item.view ? 'font-bold' : ''" x-text="item.icon"></span>
+                            <span class="transition-all duration-300 truncate" :style="open ? 'opacity:1; max-width:180px;' : 'opacity:0; max-width:0px;'">
+                                <span x-text="item.label"></span>
+                            </span>
+                        </a>
                     </li>
                 </template>
             </ul>

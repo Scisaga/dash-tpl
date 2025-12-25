@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "dev": "node scripts/dev-server.cjs",
     "build:css": "node scripts/build-css.cjs",
     "watch:css": "node scripts/build-css.cjs --watch"
   },
